@@ -31,33 +31,82 @@ if (!isset($_SESSION["commercant_id"])) {
     $titrePage = "Espace commerçant";
     include "header.php";
     ?>
+
+    <style>
+        /* --- Animations formulaire connexion --- */
+        @keyframes fade-scale-in {
+            from { opacity: 0; transform: scale(0.94); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        .icone-connexion {
+            animation: fade-scale-in 0.5s ease both;
+        }
+        @keyframes slide-up-in {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .titre-connexion {
+            animation: slide-up-in 0.45s ease both;
+            animation-delay: 0.1s;
+        }
+        .carte-connexion {
+            animation: slide-up-in 0.5s ease both;
+            animation-delay: 0.2s;
+        }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20% { transform: translateX(-6px); }
+            40% { transform: translateX(6px); }
+            60% { transform: translateX(-4px); }
+            80% { transform: translateX(4px); }
+        }
+        .erreur-connexion {
+            animation: shake 0.4s ease;
+        }
+        .champ-connexion {
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+        }
+        .champ-connexion:focus {
+            transform: scale(1.015);
+        }
+        .btn-connexion {
+            transition: transform 0.15s ease, box-shadow 0.2s ease;
+        }
+        .btn-connexion:active {
+            transform: scale(0.97);
+        }
+        .btn-connexion:hover {
+            box-shadow: 0 8px 20px -6px rgba(4, 120, 87, 0.5);
+        }
+    </style>
+
     <div class="min-h-[70vh] flex items-center justify-center bg-gradient-to-br from-gray-50 to-emerald-50 px-4">
         <div class="w-full max-w-md">
             <div class="text-center mb-6">
-                <div class="inline-flex items-center justify-center w-14 h-14 bg-emerald-700 rounded-2xl mb-3">
+                <div class="icone-connexion inline-flex items-center justify-center w-14 h-14 bg-emerald-700 rounded-2xl mb-3">
                     <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 21h18M5 21V7l8-4v18M13 21V7l6 4v10M9 9v.01M9 12v.01M9 15v.01"/>
                     </svg>
                 </div>
-                <h1 class="text-2xl font-bold text-gray-900">Espace commerçant</h1>
-                <p class="text-gray-500 text-sm mt-1">Gérez vos paniers et vos ventes</p>
+                <h1 class="titre-connexion text-2xl font-bold text-gray-900">Espace commerçant</h1>
+                <p class="titre-connexion text-gray-500 text-sm mt-1">Gérez vos paniers et vos ventes</p>
             </div>
 
-            <div class="bg-white rounded-2xl shadow-lg border border-gray-100 p-7">
+            <div class="carte-connexion bg-white rounded-2xl shadow-lg border border-gray-100 p-7">
                 <?php if (isset($erreurConnexion)) { ?>
-                    <p class="bg-red-50 text-red-600 text-sm text-center p-3 rounded-lg mb-4"><?php echo $erreurConnexion; ?></p>
+                    <p class="erreur-connexion bg-red-50 text-red-600 text-sm text-center p-3 rounded-lg mb-4"><?php echo $erreurConnexion; ?></p>
                 <?php } ?>
 
                 <form action="" method="POST" class="space-y-3">
                     <div>
                         <label class="text-xs font-medium text-gray-500 mb-1 block">Email</label>
-                        <input type="email" name="email" placeholder="vous@boutique.com" class="border border-gray-200 rounded-lg p-3 w-full focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                        <input type="email" name="email" placeholder="vous@boutique.com" class="champ-connexion border border-gray-200 rounded-lg p-3 w-full focus:outline-none focus:ring-2 focus:ring-emerald-500">
                     </div>
                     <div>
                         <label class="text-xs font-medium text-gray-500 mb-1 block">Mot de passe</label>
-                        <input type="password" name="mot_de_passe" placeholder="••••••••" class="border border-gray-200 rounded-lg p-3 w-full focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                        <input type="password" name="mot_de_passe" placeholder="••••••••" class="champ-connexion border border-gray-200 rounded-lg p-3 w-full focus:outline-none focus:ring-2 focus:ring-emerald-500">
                     </div>
-                    <button type="submit" class="bg-emerald-700 hover:bg-emerald-800 text-white rounded-lg p-3 w-full font-semibold transition">Se connecter</button>
+                    <button type="submit" class="btn-connexion bg-emerald-700 hover:bg-emerald-800 text-white rounded-lg p-3 w-full font-semibold transition">Se connecter</button>
                 </form>
             </div>
 
@@ -145,6 +194,79 @@ $titrePage = "Tableau de bord - " . $_SESSION["nom_boutique"];
 include "header.php";
 ?>
 
+<style>
+    /* --- Animations tableau de bord --- */
+    @keyframes slide-up-in {
+        from { opacity: 0; transform: translateY(16px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes count-pop {
+        0% { transform: scale(0.7); opacity: 0; }
+        60% { transform: scale(1.08); opacity: 1; }
+        100% { transform: scale(1); }
+    }
+    .stat-carte {
+        opacity: 0;
+        animation: slide-up-in 0.45s ease forwards;
+    }
+    .stat-carte:nth-child(1) { animation-delay: 0.05s; }
+    .stat-carte:nth-child(2) { animation-delay: 0.12s; }
+    .stat-carte:nth-child(3) { animation-delay: 0.19s; }
+    .stat-carte:nth-child(4) { animation-delay: 0.26s; }
+    .stat-carte:hover {
+        transform: translateY(-2px);
+        transition: transform 0.2s ease;
+    }
+    .stat-chiffre {
+        display: inline-block;
+        animation: count-pop 0.5s ease both;
+        animation-delay: 0.35s;
+    }
+    .message-succes {
+        animation: slide-up-in 0.35s ease both;
+    }
+    .ligne-liste {
+        opacity: 0;
+        transform: translateX(-10px);
+        animation: fade-slide-x 0.4s ease forwards;
+    }
+    @keyframes fade-slide-x {
+        to { opacity: 1; transform: translateX(0); }
+    }
+    .btn-supprimer {
+        transition: transform 0.15s ease;
+    }
+    .btn-supprimer:hover {
+        transform: scale(1.15) rotate(-6deg);
+    }
+    .btn-recupere {
+        transition: transform 0.15s ease, box-shadow 0.2s ease;
+    }
+    .btn-recupere:active {
+        transform: scale(0.95);
+    }
+    .form-publier {
+        transition: box-shadow 0.2s ease;
+    }
+    .form-publier input:focus,
+    .form-publier textarea:focus {
+        transform: scale(1.01);
+    }
+    .form-publier input,
+    .form-publier textarea {
+        transition: transform 0.15s ease;
+    }
+    .btn-publier {
+        transition: transform 0.15s ease, box-shadow 0.2s ease;
+    }
+    .btn-publier:active {
+        transform: scale(0.97);
+    }
+    .btn-publier:hover {
+        box-shadow: 0 8px 20px -6px rgba(4, 120, 87, 0.5);
+    }
+</style>
+
 <div class="bg-white border-b border-gray-100">
     <div class="max-w-5xl mx-auto px-4 py-6 flex items-center justify-between">
         <div>
@@ -158,20 +280,20 @@ include "header.php";
 <div class="max-w-5xl mx-auto px-4 py-8">
 
     <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-        <div class="bg-white rounded-xl border border-gray-100 shadow-sm p-4">
-            <p class="text-2xl font-extrabold text-gray-900"><?php echo count($mesPaniers); ?></p>
+        <div class="stat-carte bg-white rounded-xl border border-gray-100 shadow-sm p-4">
+            <p class="stat-chiffre text-2xl font-extrabold text-gray-900"><?php echo count($mesPaniers); ?></p>
             <p class="text-xs text-gray-500 mt-1">Paniers publiés</p>
         </div>
-        <div class="bg-white rounded-xl border border-gray-100 shadow-sm p-4">
-            <p class="text-2xl font-extrabold text-emerald-700"><?php echo $totalPaniersDispo; ?></p>
+        <div class="stat-carte bg-white rounded-xl border border-gray-100 shadow-sm p-4">
+            <p class="stat-chiffre text-2xl font-extrabold text-emerald-700"><?php echo $totalPaniersDispo; ?></p>
             <p class="text-xs text-gray-500 mt-1">Disponibles</p>
         </div>
-        <div class="bg-white rounded-xl border border-gray-100 shadow-sm p-4">
-            <p class="text-2xl font-extrabold text-orange-500"><?php echo count($reservationsAPreparer); ?></p>
+        <div class="stat-carte bg-white rounded-xl border border-gray-100 shadow-sm p-4">
+            <p class="stat-chiffre text-2xl font-extrabold text-orange-500"><?php echo count($reservationsAPreparer); ?></p>
             <p class="text-xs text-gray-500 mt-1">À préparer</p>
         </div>
-        <div class="bg-white rounded-xl border border-gray-100 shadow-sm p-4">
-            <p class="text-2xl font-extrabold text-gray-900"><?php echo $chiffreAffaires; ?> F</p>
+        <div class="stat-carte bg-white rounded-xl border border-gray-100 shadow-sm p-4">
+            <p class="stat-chiffre text-2xl font-extrabold text-gray-900"><?php echo $chiffreAffaires; ?> F</p>
             <p class="text-xs text-gray-500 mt-1">Chiffre d'affaires</p>
         </div>
     </div>
@@ -185,10 +307,10 @@ include "header.php";
             </h2>
 
             <?php if (isset($messagePublication)) { ?>
-                <p class="bg-emerald-50 text-emerald-700 text-sm p-3 rounded-lg mb-3 font-medium">✓ <?php echo $messagePublication; ?></p>
+                <p class="message-succes bg-emerald-50 text-emerald-700 text-sm p-3 rounded-lg mb-3 font-medium">✓ <?php echo $messagePublication; ?></p>
             <?php } ?>
 
-            <form action="" method="POST" class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 space-y-3">
+            <form action="" method="POST" class="form-publier bg-white p-5 rounded-2xl shadow-sm border border-gray-100 space-y-3">
                 <input type="text" name="titre" placeholder="Titre du panier" class="border border-gray-200 rounded-lg p-3 w-full text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
                 <textarea name="description" placeholder="Description" rows="2" class="border border-gray-200 rounded-lg p-3 w-full text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"></textarea>
                 <div class="grid grid-cols-2 gap-2">
@@ -206,7 +328,7 @@ include "header.php";
                         <input type="time" name="creneau_fin" class="border border-gray-200 rounded-lg p-2.5 w-full text-sm">
                     </div>
                 </div>
-                <button type="submit" class="bg-emerald-700 hover:bg-emerald-800 text-white rounded-lg p-3 w-full font-semibold text-sm transition">Publier le panier</button>
+                <button type="submit" class="btn-publier bg-emerald-700 hover:bg-emerald-800 text-white rounded-lg p-3 w-full font-semibold text-sm transition">Publier le panier</button>
             </form>
         </div>
 
@@ -221,8 +343,8 @@ include "header.php";
                     <?php if (count($mesPaniers) === 0) { ?>
                         <p class="text-gray-400 text-sm">Vous n'avez encore rien publié.</p>
                     <?php } ?>
-                    <?php foreach ($mesPaniers as $panier) { ?>
-                        <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-4 flex justify-between items-center">
+                    <?php foreach ($mesPaniers as $index => $panier) { ?>
+                        <div class="ligne-liste bg-white rounded-xl shadow-sm border border-gray-100 p-4 flex justify-between items-center" style="animation-delay: <?php echo 0.05 * $index; ?>s;">
                             <div>
                                 <p class="font-semibold text-gray-900 text-sm"><?php echo $panier["titre"]; ?></p>
                                 <p class="text-xs text-gray-500"><?php echo $panier["prix_reduit"]; ?> FCFA — Reste <?php echo $panier["quantite_disponible"]; ?></p>
@@ -235,7 +357,7 @@ include "header.php";
                                 <?php } ?>
                                 <form action="" method="POST" onsubmit="return confirm('Supprimer ce panier définitivement ?');">
                                     <input type="hidden" name="supprimer_panier" value="<?php echo $panier['id']; ?>">
-                                    <button type="submit" class="text-red-400 hover:text-red-600 transition">
+                                    <button type="submit" class="btn-supprimer text-red-400 hover:text-red-600 transition">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
                                         </svg>
@@ -256,13 +378,13 @@ include "header.php";
                     <?php if (count($reservationsAPreparer) === 0) { ?>
                         <p class="text-gray-400 text-sm">Aucune réservation en attente.</p>
                     <?php } ?>
-                    <?php foreach ($reservationsAPreparer as $reservation) { ?>
-                        <div class="bg-white rounded-xl shadow-sm border border-orange-100 p-4">
+                    <?php foreach ($reservationsAPreparer as $index => $reservation) { ?>
+                        <div class="ligne-liste bg-white rounded-xl shadow-sm border border-orange-100 p-4" style="animation-delay: <?php echo 0.05 * $index; ?>s;">
                             <p class="font-semibold text-gray-900 text-sm"><?php echo $reservation["titre"]; ?></p>
                             <p class="text-xs text-gray-500 mt-1">👤 <?php echo $reservation["nom_client"]; ?> — 📞 <?php echo $reservation["telephone"]; ?></p>
                             <form action="" method="POST" class="mt-2">
                                 <input type="hidden" name="marquer_recupere" value="<?php echo $reservation['id']; ?>">
-                                <button type="submit" class="bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-semibold px-3 py-1.5 rounded-lg transition">
+                                <button type="submit" class="btn-recupere bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-semibold px-3 py-1.5 rounded-lg transition">
                                     ✓ Marquer comme récupéré
                                 </button>
                             </form>
@@ -280,8 +402,8 @@ include "header.php";
                     <?php if (count($historiqueVentes) === 0) { ?>
                         <p class="text-gray-400 text-sm">Aucune vente terminée pour l'instant.</p>
                     <?php } ?>
-                    <?php foreach ($historiqueVentes as $vente) { ?>
-                        <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-4 flex justify-between items-center">
+                    <?php foreach ($historiqueVentes as $index => $vente) { ?>
+                        <div class="ligne-liste bg-white rounded-xl shadow-sm border border-gray-100 p-4 flex justify-between items-center" style="animation-delay: <?php echo 0.05 * $index; ?>s;">
                             <div>
                                 <p class="font-semibold text-gray-900 text-sm"><?php echo $vente["titre"]; ?></p>
                                 <p class="text-xs text-gray-500">👤 <?php echo $vente["nom_client"]; ?></p>

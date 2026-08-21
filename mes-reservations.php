@@ -6,15 +6,45 @@ if (!isset($_SESSION["client_id"])) {
     $titrePage = "Connexion requise";
     include "header.php";
     ?>
+
+    <style>
+        @keyframes fade-scale-in {
+            from { opacity: 0; transform: scale(0.85); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        .icone-cadenas {
+            animation: fade-scale-in 0.5s ease both;
+        }
+        @keyframes slide-up-in {
+            from { opacity: 0; transform: translateY(16px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .texte-connexion-requise {
+            animation: slide-up-in 0.4s ease both;
+            animation-delay: 0.15s;
+        }
+        .btn-connexion-requise {
+            animation: slide-up-in 0.4s ease both;
+            animation-delay: 0.25s;
+            transition: transform 0.15s ease, box-shadow 0.2s ease;
+        }
+        .btn-connexion-requise:hover {
+            box-shadow: 0 8px 20px -6px rgba(4, 120, 87, 0.5);
+        }
+        .btn-connexion-requise:active {
+            transform: scale(0.96);
+        }
+    </style>
+
     <div class="min-h-[60vh] flex items-center justify-center px-4">
         <div class="text-center">
-            <div class="inline-flex items-center justify-center w-16 h-16 bg-gray-100 rounded-2xl mb-4">
+            <div class="icone-cadenas inline-flex items-center justify-center w-16 h-16 bg-gray-100 rounded-2xl mb-4">
                 <svg class="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
                 </svg>
             </div>
-            <p class="text-gray-600 mb-5">Connectez-vous pour voir vos réservations</p>
-            <a href="espace-client.php" class="bg-emerald-700 hover:bg-emerald-800 text-white px-6 py-3 rounded-lg font-medium transition">Se connecter</a>
+            <p class="texte-connexion-requise text-gray-600 mb-5">Connectez-vous pour voir vos réservations</p>
+            <a href="espace-client.php" class="btn-connexion-requise inline-block bg-emerald-700 hover:bg-emerald-800 text-white px-6 py-3 rounded-lg font-medium transition">Se connecter</a>
         </div>
     </div>
     <?php
@@ -37,8 +67,85 @@ $titrePage = "Mes réservations";
 include "header.php";
 ?>
 
+<style>
+    /* --- Animations Mes réservations --- */
+    @keyframes slide-up-in {
+        from { opacity: 0; transform: translateY(14px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    .en-tete-page h1,
+    .en-tete-page p {
+        opacity: 0;
+        animation: slide-up-in 0.4s ease forwards;
+    }
+    .en-tete-page p {
+        animation-delay: 0.08s;
+    }
+
+    .carte-reservation {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.5s ease, transform 0.5s ease, box-shadow 0.2s ease;
+    }
+    .carte-reservation.visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    .carte-reservation:hover {
+        box-shadow: 0 10px 24px -8px rgba(0,0,0,0.12);
+        transform: translateY(-2px);
+    }
+    .carte-reservation.visible:hover {
+        transform: translateY(-2px);
+    }
+
+    @keyframes pulse-badge {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.08); }
+    }
+    .badge-en-attente {
+        animation: pulse-badge 1.8s ease-in-out infinite;
+    }
+
+    @keyframes check-pop {
+        0% { transform: scale(0); opacity: 0; }
+        60% { transform: scale(1.15); opacity: 1; }
+        100% { transform: scale(1); }
+    }
+    .badge-recupere {
+        display: inline-block;
+        animation: check-pop 0.4s ease both;
+    }
+
+    .icone-panier {
+        transition: transform 0.2s ease;
+    }
+    .carte-reservation:hover .icone-panier {
+        transform: scale(1.1) rotate(-4deg);
+    }
+
+    @keyframes fade-scale-in {
+        from { opacity: 0; transform: scale(0.85); }
+        to { opacity: 1; transform: scale(1); }
+    }
+    .icone-vide {
+        animation: fade-scale-in 0.5s ease both;
+    }
+    .texte-vide {
+        opacity: 0;
+        animation: slide-up-in 0.4s ease forwards;
+        animation-delay: 0.15s;
+    }
+    .lien-decouvrir {
+        transition: transform 0.15s ease;
+    }
+    .lien-decouvrir:hover {
+        transform: translateX(3px);
+    }
+</style>
+
 <div class="bg-white border-b border-gray-100">
-    <div class="max-w-3xl mx-auto px-4 py-6">
+    <div class="max-w-3xl mx-auto px-4 py-6 en-tete-page">
         <h1 class="text-2xl font-bold text-gray-900">Mes réservations</h1>
         <p class="text-gray-500 text-sm mt-1"><?php echo count($reservations); ?> réservation(s) au total</p>
     </div>
@@ -48,19 +155,19 @@ include "header.php";
 
     <?php if (count($reservations) === 0) { ?>
         <div class="text-center py-16">
-            <div class="inline-flex items-center justify-center w-16 h-16 bg-emerald-50 rounded-2xl mb-4">
+            <div class="icone-vide inline-flex items-center justify-center w-16 h-16 bg-emerald-50 rounded-2xl mb-4">
                 <svg class="w-8 h-8 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
                 </svg>
             </div>
-            <p class="text-gray-500 mb-2">Vous n'avez pas encore de réservation</p>
-            <a href="index.php" class="text-emerald-700 font-semibold text-sm">Découvrir les paniers disponibles →</a>
+            <p class="texte-vide text-gray-500 mb-2">Vous n'avez pas encore de réservation</p>
+            <a href="index.php" class="lien-decouvrir inline-block text-emerald-700 font-semibold text-sm">Découvrir les paniers disponibles →</a>
         </div>
     <?php } ?>
 
     <div class="space-y-3">
         <?php foreach ($reservations as $reservation) { ?>
-            <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+            <div class="carte-reservation bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
                 <div class="flex">
 
                     <!-- Bandeau latéral coloré selon le statut -->
@@ -68,7 +175,7 @@ include "header.php";
 
                     <div class="flex-1 p-4 flex justify-between items-center gap-4">
                         <div class="flex gap-3 items-center min-w-0">
-                            <div class="w-12 h-12 rounded-xl bg-emerald-50 flex items-center justify-center text-xl flex-shrink-0">🥡</div>
+                            <div class="icone-panier w-12 h-12 rounded-xl bg-emerald-50 flex items-center justify-center text-xl flex-shrink-0">🥡</div>
                             <div class="min-w-0">
                                 <h2 class="font-bold text-gray-900 truncate"><?php echo $reservation["titre"]; ?></h2>
                                 <p class="text-sm text-gray-500 truncate"><?php echo $reservation["nom_boutique"]; ?></p>
@@ -79,9 +186,9 @@ include "header.php";
                         <div class="text-right flex-shrink-0">
                             <p class="text-emerald-700 font-extrabold"><?php echo $reservation["prix_reduit"]; ?> F</p>
                             <?php if ($reservation["statut"] === "en_attente") { ?>
-                                <span class="inline-block mt-1 bg-orange-100 text-orange-700 text-xs font-bold px-2.5 py-1 rounded-full">En attente</span>
+                                <span class="badge-en-attente inline-block mt-1 bg-orange-100 text-orange-700 text-xs font-bold px-2.5 py-1 rounded-full">En attente</span>
                             <?php } elseif ($reservation["statut"] === "recupere") { ?>
-                                <span class="inline-block mt-1 bg-emerald-100 text-emerald-700 text-xs font-bold px-2.5 py-1 rounded-full">✓ Récupéré</span>
+                                <span class="badge-recupere inline-block mt-1 bg-emerald-100 text-emerald-700 text-xs font-bold px-2.5 py-1 rounded-full">✓ Récupéré</span>
                             <?php } else { ?>
                                 <span class="inline-block mt-1 bg-gray-100 text-gray-600 text-xs font-bold px-2.5 py-1 rounded-full"><?php echo $reservation["statut"]; ?></span>
                             <?php } ?>
@@ -93,5 +200,25 @@ include "header.php";
         <?php } ?>
     </div>
 </div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    // Apparition des cartes de réservation au scroll, en cascade
+    const cartes = document.querySelectorAll(".carte-reservation");
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry, index) => {
+            if (entry.isIntersecting) {
+                setTimeout(() => {
+                    entry.target.classList.add("visible");
+                }, index * 80);
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.1 });
+
+    cartes.forEach((carte) => observer.observe(carte));
+});
+</script>
 
 <?php include "footer.php"; ?>
